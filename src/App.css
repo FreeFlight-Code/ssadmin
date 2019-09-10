@@ -1,0 +1,82 @@
+body
+{
+  padding: 20px;
+}
+h1
+{
+  text-align: center;
+}
+input{
+  height: 20px;
+  padding: 5px;
+  font-size: 16px;
+}
+.dataContainer
+{
+  margin: 20px 0 0 0;
+  display: grid;
+  grid-template-columns: 50% 1fr;
+}
+.left
+{
+  border-right: 2px solid black;
+}
+.header
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.item
+{
+  position: relative;
+  padding: 1em 1em;
+}
+.item div{
+  margin: .6em 0;
+}
+.item:hover
+{
+  background-color: bisque;
+  cursor: pointer;
+}
+.item:hover .hidden
+{
+  display: inline-block;
+}
+.title
+{
+  margin: .6em 0;
+}
+.date{
+  margin: 0 .6em;
+}
+.hidden{
+  display: none;
+}
+.preview.right
+{
+  position: absolute;
+  display: inline-block;
+  background-size: cover;
+  height: 100px;
+  width: 100px;
+  left: -110px;
+  top: -.1em;
+}
+.preview.left
+{
+  position: relative;
+  display: inline-block;
+  background-size: cover;
+  height: 100px;
+  width: 100px;
+}
+.views, .amount
+{
+  background-color: blue;
+  color: white;
+  padding: .5em;
+  border-radius: 50%;
+  margin-right: 1em;
+}
