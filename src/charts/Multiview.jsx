@@ -24,9 +24,36 @@ class Multiview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bigChartData: "week"
+      data: [92,40,28],
+      labels: ['test', 'test2', 'test3'],
+      bigChartData: "days,7"
     };
   }
+
+  componentDidMount(){
+    SalesData("days,7").then(res=>console.log(res))
+    const { dataType } = this.props;
+    switch (dataType){
+      // case "views":
+      //   this.setState({
+      //     labels: ViewsData(this.state.bigChartData).labels,
+      //     data: ViewsData(this.state.bigChartData).data
+      //   })
+      //   break;
+      //   case "sales":
+      //       this.setState({
+      //         labels: SalesData(this.state.bigChartData).labels,
+      //         data: SalesData(this.state.bigChartData).data
+      //       })
+      // break;
+      default:
+        console.error('incorrect dataType passed')
+      break;
+    }
+  }
+
+
+
   todaysDate = new Date().getDate();
 
   options = {
@@ -79,76 +106,6 @@ class Multiview extends React.Component {
     }
   };
 
-  months = ()=>{
-    let array = [
-      "JAN",
-      "FEB",
-      "MAR",
-      "APR",
-      "MAY",
-      "JUN",
-      "JUL",
-      "AUG",
-      "SEP",
-      "OCT",
-      "NOV",
-      "DEC"
-    ]
-    let thisMonth = new Date().getMonth();
-    for(let i = 0; i < (11 - thisMonth); i++){
-      let lastMonth = array.pop();
-      array.unshift(lastMonth);
-    }
-    return array;
-  }
-
-  labels = {
-    week: [
-      this.todaysDate - 6,
-      this.todaysDate - 5,
-      this.todaysDate - 4,
-      this.todaysDate - 3,
-      this.todaysDate - 2,
-      this.todaysDate - 1,
-      this.todaysDate,
-
-    ],
-    month: [
-      this.todaysDate - 29,
-      this.todaysDate - 28,
-      this.todaysDate - 27,
-      this.todaysDate - 26,
-      this.todaysDate - 25,
-      this.todaysDate - 24,
-      this.todaysDate - 23,
-      this.todaysDate - 22,
-      this.todaysDate - 21,
-      this.todaysDate - 20,
-      this.todaysDate - 19,
-      this.todaysDate - 18,
-      this.todaysDate - 17,
-      this.todaysDate - 16,
-      this.todaysDate - 15,
-      this.todaysDate - 14,
-      this.todaysDate - 13,
-      this.todaysDate - 12,
-      this.todaysDate - 11,
-      this.todaysDate - 10,
-      this.todaysDate - 9,
-      this.todaysDate - 8,
-      this.todaysDate - 7,
-      this.todaysDate - 6,
-      this.todaysDate - 5,
-      this.todaysDate - 4,
-      this.todaysDate - 3,
-      this.todaysDate - 2,
-      this.todaysDate - 1,
-      this.todaysDate,
-
-    ],
-    year: this.months()
-  }
-
   passChartJS = canvas => {
       const ctx = canvas.getContext("2d");
   
@@ -159,7 +116,7 @@ class Multiview extends React.Component {
       gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
       return {
-        labels: this.labels[this.state.bigChartData],
+        labels: this.state.labels,
         datasets: [
           {
             label: "My First dataset",
@@ -176,7 +133,7 @@ class Multiview extends React.Component {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100]
+            data: this.state.data
           }
         ]
       };
@@ -214,7 +171,7 @@ class Multiview extends React.Component {
   }
 
   render() {
-    const {title, summary, type} = this.props;
+    const {title, summary, chartType} = this.props;
     return (
               <Card className="card-chart">
                 <CardHeader>
@@ -231,12 +188,12 @@ class Multiview extends React.Component {
                         <Button
                           tag="label"
                           className={classNames("btn-simple", {
-                            active: this.state.bigChartData === "week"
+                            active: this.state.bigChartData === "days"
                           })}
                           color="info"
                           id="0"
                           size="sm"
-                          onClick={() => this.setBgChartData("week")}
+                          onClick={() => this.setBgChartData("days")}
                         >
                           <input
                             defaultChecked
@@ -257,9 +214,9 @@ class Multiview extends React.Component {
                           size="sm"
                           tag="label"
                           className={classNames("btn-simple", {
-                            active: this.state.bigChartData === "month"
+                            active: this.state.bigChartData === "days,30"
                           })}
-                          onClick={() => this.setBgChartData("month")}
+                          onClick={() => this.setBgChartData("days,30")}
                         >
                           <input
                             className="d-none"
@@ -279,9 +236,9 @@ class Multiview extends React.Component {
                           size="sm"
                           tag="label"
                           className={classNames("btn-simple", {
-                            active: this.state.bigChartData === "year"
+                            active: this.state.bigChartData === "months"
                           })}
-                          onClick={() => this.setBgChartData("year")}
+                          onClick={() => this.setBgChartData("months")}
                         >
                           <input
                             className="d-none"
@@ -302,7 +259,7 @@ class Multiview extends React.Component {
 
                 <CardBody>
                   <div className="chart-area">
-                    {this.chartType(type)}
+                    {this.chartType(chartType)}
                   </div>
                 </CardBody>
               </Card>

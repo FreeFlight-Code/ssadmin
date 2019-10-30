@@ -15,21 +15,23 @@ class Dashboard extends React.Component {
   render() {
     return (
         <div className="content">
-          <Row>
+          {/* <Row>
               <Col md="12">
                 <Multiview 
                   title="SimuStream" 
                   summary="Views" 
-                  type="line"
+                  chartType="line"
+                  dataType="views"
                 />
               </Col>
-          </Row>
+          </Row> */}
           <Row>
               <Col md="12">
                 <Multiview 
                   title="SimuStream" 
                   summary="Sales" 
-                  type="line"
+                  chartType="line"
+                  dataType="sales"
                 />
               </Col>
           </Row>
