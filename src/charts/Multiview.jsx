@@ -3,10 +3,10 @@ import React from "react";
 import classNames from "classnames";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
-
+import CreateDateLabels from '../data/CreateDateLabels'
 // data options
-import ViewsData from '../data/GetViews';
-import SalesData from '../data/GetSales';
+// import ViewsData from '../data/GetViews';
+// import SalesData from '../data/GetSales';
 
 // reactstrap components
 import {
@@ -25,36 +25,29 @@ class Multiview extends React.Component {
     super(props);
     this.state = {
       data: [92,40,28],
-      labels: ['test', 'test2', 'test3'],
-      bigChartData: "days,7"
+      labelIndex: 0,
+      labels:[]
     };
   }
 
   componentDidMount(){
-    SalesData("days,7").then(res=>console.log(res))
-    const { dataType } = this.props;
-    switch (dataType){
-      // case "views":
-      //   this.setState({
-      //     labels: ViewsData(this.state.bigChartData).labels,
-      //     data: ViewsData(this.state.bigChartData).data
-      //   })
-      //   break;
-      //   case "sales":
-      //       this.setState({
-      //         labels: SalesData(this.state.bigChartData).labels,
-      //         data: SalesData(this.state.bigChartData).data
-      //       })
-      // break;
-      default:
-        console.error('incorrect dataType passed')
-      break;
+    const { dataType, labels } = this.props;
+    // console.log(CreateDateLabels(labels)[2])
+    if(!dataType) throw new Error ("Incorrect datatype passed to multiview")
+    if(!labels) throw new Error ("Incorrect label format passed to multiview")
+    if (dataType){
+      switch (dataType){
+        case "sales":
+              this.setState({
+                labels: CreateDateLabels(labels)
+              })
+        break;
+        default:
+          console.error("improper datatype passed to multiview component")
+
+      }
     }
   }
-
-
-
-  todaysDate = new Date().getDate();
 
   options = {
     maintainAspectRatio: false,
@@ -116,7 +109,7 @@ class Multiview extends React.Component {
       gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
       return {
-        labels: this.state.labels,
+        labels: this.state.labels[this.state.labelIndex],
         datasets: [
           {
             label: "My First dataset",
@@ -140,9 +133,9 @@ class Multiview extends React.Component {
     }
   
 
-  setBgChartData = name => {
+  setLabelIndex = name => {
     this.setState({
-      bigChartData: name
+      labelIndex: name
     });
   };
 
@@ -171,99 +164,108 @@ class Multiview extends React.Component {
   }
 
   render() {
-    const {title, summary, chartType} = this.props;
-    return (
-              <Card className="card-chart">
-                <CardHeader>
-                  <Row>
-                    <Col className="text-left" sm="6">
-                      <h5 className="card-category">{title}</h5>
-                      <CardTitle tag="h2">{summary}</CardTitle>
-                    </Col>
-                    <Col sm="6">
-                      <ButtonGroup
-                        className="btn-group-toggle float-right"
-                        data-toggle="buttons"
-                      >
-                        <Button
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: this.state.bigChartData === "days"
-                          })}
-                          color="info"
-                          id="0"
-                          size="sm"
-                          onClick={() => this.setBgChartData("days")}
+    // console.log(this.state)
+    let {title, summary, chartType, labels} = this.props;
+    let label1 = labels[0][0];
+    let label2 = labels[1][0];
+    let label3 = labels[2][0];
+    if(!chartType) chartType = "line";
+    if(title && summary && chartType){
+      return (
+                <Card className="card-chart">
+                  <CardHeader>
+                    <Row>
+                      <Col className="text-left" sm="6">
+                        <h5 className="card-category">{title}</h5>
+                        <CardTitle tag="h2">{summary}</CardTitle>
+                      </Col>
+                      <Col sm="6">
+                        <ButtonGroup
+                          className="btn-group-toggle float-right"
+                          data-toggle="buttons"
                         >
-                          <input
-                            defaultChecked
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Last Week
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-single-02" />
-                          </span>
-                        </Button>
-                        <Button
-                          color="info"
-                          id="1"
-                          size="sm"
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: this.state.bigChartData === "days,30"
-                          })}
-                          onClick={() => this.setBgChartData("days,30")}
-                        >
-                          <input
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Last Month
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-gift-2" />
-                          </span>
-                        </Button>
-                        <Button
-                          color="info"
-                          id="2"
-                          size="sm"
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: this.state.bigChartData === "months"
-                          })}
-                          onClick={() => this.setBgChartData("months")}
-                        >
-                          <input
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Last Year
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-tap-02" />
-                          </span>
-                        </Button>
-                      </ButtonGroup>
-                    </Col>
-                  </Row>
-                </CardHeader>
+                          <Button
+                            tag="label"
+                            className={classNames("btn-simple", {
+                              active: this.state.labelIndex === 0
+                            })}
+                            color="info"
+                            id="0"
+                            size="sm"
+                            onClick={() => this.setLabelIndex(0)}
+                          >
+                            <input
+                              defaultChecked
+                              className="d-none"
+                              name="options"
+                              type="radio"
+                            />
+                            <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                              {label1}
+                            </span>
+                            <span className="d-block d-sm-none">
+                              <i className="tim-icons icon-single-02" />
+                            </span>
+                          </Button>
+                          <Button
+                            color="info"
+                            id="1"
+                            size="sm"
+                            tag="label"
+                            className={classNames("btn-simple", {
+                              active: this.state.labelIndex === 1
+                            })}
+                            onClick={() => this.setLabelIndex(1)}
+                          >
+                            <input
+                              className="d-none"
+                              name="options"
+                              type="radio"
+                            />
+                            <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                              {label2}
+                            </span>
+                            <span className="d-block d-sm-none">
+                              <i className="tim-icons icon-gift-2" />
+                            </span>
+                          </Button>
+                          <Button
+                            color="info"
+                            id="2"
+                            size="sm"
+                            tag="label"
+                            className={classNames("btn-simple", {
+                              active: this.state.labelIndex === 2
+                            })}
+                            onClick={() => this.setLabelIndex(2)}
+                          >
+                            <input
+                              className="d-none"
+                              name="options"
+                              type="radio"
+                            />
+                            <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                              {label3}
+                            </span>
+                            <span className="d-block d-sm-none">
+                              <i className="tim-icons icon-tap-02" />
+                            </span>
+                          </Button>
+                        </ButtonGroup>
+                      </Col>
+                    </Row>
+                  </CardHeader>
 
-                <CardBody>
-                  <div className="chart-area">
-                    {this.chartType(chartType)}
-                  </div>
-                </CardBody>
-              </Card>
-    );
+                  <CardBody>
+                    <div className="chart-area">
+                      {this.chartType(chartType)}
+                    </div>
+                  </CardBody>
+                </Card>
+      );
+    } else {
+      return null;
+    }
   }
 }
 

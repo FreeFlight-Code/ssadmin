@@ -42,6 +42,8 @@ class FixedPlugin extends Component {
     }
   };
   render() {
+    // make default light background instead of dark
+    document.body.classList.add("white-content");
     return (
       <div className="fixed-plugin">
         <div className={this.state.classes}>

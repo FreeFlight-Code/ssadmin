@@ -15,16 +15,6 @@ class Dashboard extends React.Component {
   render() {
     return (
         <div className="content">
-          {/* <Row>
-              <Col md="12">
-                <Multiview 
-                  title="SimuStream" 
-                  summary="Views" 
-                  chartType="line"
-                  dataType="views"
-                />
-              </Col>
-          </Row> */}
           <Row>
               <Col md="12">
                 <Multiview 
@@ -32,6 +22,11 @@ class Dashboard extends React.Component {
                   summary="Sales" 
                   chartType="line"
                   dataType="sales"
+                  labels={[
+                    ["Last Week", "days", 7],
+                    ["Last Month", "days", 30],
+                    ["Last Year", "months", 12]
+                  ]}
                 />
               </Col>
           </Row>
@@ -39,24 +34,24 @@ class Dashboard extends React.Component {
           <Row>
             <Col md="4">
               < Simpleview 
-                title="war games" 
-                summary="wear" 
+                title="test 1" 
+                summary="views" 
                 icon="icon-bell-55"
                 type="line"
               />
             </Col>
             <Col md="4">
               < Simpleview 
-                title="help" 
-                summary="ryoulive" 
+                title="test 2" 
+                summary="demo data" 
                 icon="icon-delivery-fast"
                 type="line"
               />
             </Col>
             <Col md="4">
               < Simpleview 
-                title="ToolboxOS" 
-                summary="total views" 
+                title="test 3" 
+                summary="demo data" 
                 icon="icon-delivery-fast"
                 type="line"
               />
