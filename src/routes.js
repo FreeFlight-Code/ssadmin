@@ -15,7 +15,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "views/Dashboard.jsx";
+import Summary from "views/Dashboard.jsx";
+import Enterprise from "views/Dashboard.jsx";
+import Subscription from "views/Dashboard.jsx";
 // import Icons from "views/Icons.jsx";
 // import Map from "views/Map.jsx";
 // import Notifications from "views/Notifications.jsx";
@@ -26,10 +28,26 @@ import Dashboard from "views/Dashboard.jsx";
 var routes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "Summary",
     rtlName: "لوحة القيادة",
     icon: "tim-icons icon-chart-pie-36",
-    component: Dashboard,
+    component: Summary,
+    layout: "/admin"
+  },
+  {
+    path: "/ent-client",
+    name: "Enterprise",
+    rtlName: "لوحة القيادة",
+    icon: "tim-icons icon-chart-pie-36",
+    component: Enterprise,
+    layout: "/admin"
+  },
+  {
+    path: "/sub-client",
+    name: "Subsription",
+    rtlName: "لوحة القيادة",
+    icon: "tim-icons icon-chart-pie-36",
+    component: Subscription,
     layout: "/admin"
   },
   // {
