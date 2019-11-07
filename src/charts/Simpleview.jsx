@@ -1,37 +1,91 @@
 
-import React from "react";
+const React = require("react");
 
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+const { Line, Bar } = require("react-chartjs-2");
 
 
 // reactstrap components
-import {
-  Card,
+const {Card,
   CardHeader,
   CardBody,
-  CardTitle
-} from "reactstrap";
+  CardTitle} =
+require("reactstrap");
 
 
 export default class Simpleview extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      options: {
+        maintainAspectRatio: false,
+        legend: {
+          display: true
+        },
+        tooltips: {
+          backgroundColor: "#f5f5f5",
+          titleFontColor: "#333",
+          bodyFontColor: "#666",
+          bodySpacing: 4,
+          xPadding: 12,
+          mode: "nearest",
+          intersect: 0,
+          position: "nearest"
+        },
+        responsive: true,
+        scales: {
+          yAxes: [
+            {
+              barPercentage: 1.6,
+              gridLines: {
+                drawBorder: false,
+                color: "rgba(29,140,248,0.0)",
+                zeroLineColor: "transparent"
+              },
+              ticks: {
+                suggestedMin: 0,
+                suggestedMax: 0,
+                padding: 20,
+                fontColor: "#9a9a9a"
+              }
+            }
+          ],
+          xAxes: [
+            {
+              barPercentage: .8,
+              gridLines: {
+                drawBorder: false,
+                color: "rgba(29,140,248,0.1)",
+                zeroLineColor: "transparent"
+              },
+              ticks: {
+                padding: 20,
+                fontColor: "#9a9a9a"
+              }
+            }
+          ]
+        }
+      }
+    }
+  
+  }
 
   passChartJS = canvas => {
     const ctx = canvas.getContext("2d");
 
     const gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-    gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
+    gradientStroke.addColorStop(1, "rgba(29,140,248,0.7)");
+    gradientStroke.addColorStop(0.2, "rgba(29,140,248,0.0)");
     gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
     return {
-      labels: [1, 2, 3, 4, 5, 6, 7, 8],
+      labels: [1, 2, 3, 4, 5, 6, 7, 8,4,5,6,7,4,6,6,4,4,5,55,4,4,45,3],
       datasets: [
         {
-          label: "My First dataset",
+          label: "Sales",
           fill: true,
-          backgroundColor: gradientStroke,
+          backgroundColor: "rgba(100,100,255,.4)",
           borderColor: "#1f8ef1",
           borderWidth: 2,
           borderDash: [],
@@ -43,61 +97,11 @@ export default class Simpleview extends React.Component {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100]
+          data: [ 62, 75, 65, 90, 80, 110, 100,5,45,45,45,247,4,174,23,100, 70, 90, 70, 85]
         }
       ]
     };
   }
-
-  options = {
-    maintainAspectRatio: false,
-    legend: {
-      display: false
-    },
-    tooltips: {
-      backgroundColor: "#f5f5f5",
-      titleFontColor: "#333",
-      bodyFontColor: "#666",
-      bodySpacing: 4,
-      xPadding: 12,
-      mode: "nearest",
-      intersect: 0,
-      position: "nearest"
-    },
-    responsive: true,
-    scales: {
-      yAxes: [
-        {
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: "rgba(29,140,248,0.0)",
-            zeroLineColor: "transparent"
-          },
-          ticks: {
-            suggestedMin: 60,
-            suggestedMax: 125,
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }
-      ],
-      xAxes: [
-        {
-          barPercentage: 1.6,
-          gridLines: {
-            drawBorder: false,
-            color: "rgba(29,140,248,0.1)",
-            zeroLineColor: "transparent"
-          },
-          ticks: {
-            padding: 20,
-            fontColor: "#9a9a9a"
-          }
-        }
-      ]
-    }
-  };
 
   chartType = (type) => {
     switch (type) {
@@ -105,14 +109,14 @@ export default class Simpleview extends React.Component {
         return (
           <Line
             data={this.passChartJS}
-            options={this.options}
+            options={this.state.options}
           />
         )
       case "bar":
         return (
           <Bar
           data={this.passChartJS}
-          options={this.options}
+          options={this.state.options}
           />
         )
     

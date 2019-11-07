@@ -2,8 +2,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
-import CreateDateLabels from '../labelhandlers/CreateDateLabels'
+import { Line} from "react-chartjs-2";
 // reactstrap components
 import {
   Button,
@@ -16,45 +15,34 @@ import {
   Col
 } from "reactstrap";
 // data
-import GetData from "../datahandlers/GetData";
 
 
 
 
-class Multiview extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [92,40,28],
-      labelIndex: 0,
-      labels:[]
-    };
-  }
 
-  componentDidMount(){
-    const { dataType, labels } = this.props;
-    if(!dataType) throw new Error ("Incorrect datatype passed to multiview")
-    if(!labels) throw new Error ("Incorrect label format passed to multiview")
-    if (dataType){
-      GetData(dataType).then(res=>console.log(res)).catch(e=>console.log(e))
-      const currentLabels = CreateDateLabels(labels);
-      switch (dataType){
-        case "sales":
-              this.setState({
-                labels: currentLabels
-              })
-        break;
-        case "streams":
-              this.setState({
-                labels: currentLabels
-              })
-        break;
-        default:
-          console.error("improper datatype passed to multiview component")
-
-      }
+    class Static extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                data: [],
+                labelIndex: 0,
+                labels:[]
+        };
     }
-  }
+    componentWillMount(){
+        let data = [[0,1,1,1,3,0,0,0,0,0,1,1,0,0,0,0,1,2,5,0,0,0,0,0,0,0,0,0,0,0,0], [2,5,2,5,0,0,0,0,1,0,6,1,8,2,20,5,20,5,2,0,0,0,1,1,0,5,0,1,0,0,0],[0,0,0,0,0,0,580,2532,1163,458,211,35]];
+        let labels = [[], [], []];
+        let today = new Date();
+        for (let i=7; i<38; i++){
+            labels[0].push(new Date(2019, 9, i).toISOString().split('T')[0])
+            labels[1].push(new Date(2019, 9, i).toISOString().split('T')[0])
+        }
+        labels[2]=["December", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November"]
+        this.setState({
+            labels: labels,
+            data: data
+        })
+    }
 
   options = {
     maintainAspectRatio: false,
@@ -133,7 +121,7 @@ class Multiview extends React.Component {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: this.state.data
+            data: this.state.data[this.state.labelIndex]
           }
         ]
       };
@@ -155,13 +143,6 @@ class Multiview extends React.Component {
             options={this.options}
           />
         )
-      case "bar":
-        return (
-          <Bar
-            data={this.passChartJS}
-            options={this.options}
-          />
-        )
     
       default:
         console.error('error with chart type')
@@ -171,7 +152,7 @@ class Multiview extends React.Component {
   }
 
   render() {
-    // console.log(this.state)
+    console.log(this.state)
     let {title, summary, chartType, labels} = this.props;
     let label1 = labels[0][0];
     let label2 = labels[1][0];
@@ -182,8 +163,8 @@ class Multiview extends React.Component {
                 <Card className="card-chart">
                   <CardHeader>
                     <Row>
-                      <Col className="text-left" sm="6">
-                        <h5 className="card-category">{title}</h5>
+                    <Col className="text-left" sm="6">
+                        <h5 className="card-category">{`Streams Created: 210 | Total Stream Views: 5690`}</h5>
                         <CardTitle tag="h2">{summary}</CardTitle>
                       </Col>
                       <Col sm="6">
@@ -276,4 +257,4 @@ class Multiview extends React.Component {
   }
 }
 
-export default Multiview;
+export default Static;

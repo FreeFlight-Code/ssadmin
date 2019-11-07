@@ -1,20 +1,14 @@
-export default function CreateDataLabels (array){
-    // returns and array of strings to be set as labels in a chart
-
-    // console.log(typeof units != "string")
-    // if(typeof units != "string" && typeof num != 'number'){
-    //     throw new Error('type error');
-    // }
+function CreateDateLabels (array){
 
     let today = new Date();           // Sun Oct 28 2018 17:44:43 GMT-0600 (Mountain Daylight Time)
-    let year = today.getFullYear();   // ex: 1970-2019
+    // let year = today.getFullYear();   // ex: 1970-2019
     let month = today.getMonth();     // ex: 0-11
-    let day = today.getDay();         // ex: 0-6
-    let lastYear = (new Date().getFullYear())-1;
-    let date = new Date(today.setFullYear(lastYear)).toISOString().split('T')[0];
+    // let day = today.getDay();         // ex: 0-6
+    // let lastYear = (new Date().getFullYear())-1;
+    // let date = new Date(today.setFullYear(lastYear)).toISOString().split('T')[0];
     let oneDay = 86400000;
-    let oneWeek = oneDay*7;
-    let oneMonth = oneDay*30;
+    // let oneWeek = oneDay*7;
+    // let oneMonth = oneDay*30;
     
     let returnArray = array.map((ar, i)=>{
         var labels = [];
@@ -24,10 +18,6 @@ export default function CreateDataLabels (array){
     function convertDate(date){
         return new Date(date).toISOString().split('T')[0]
     }
-
-
-
-
 
     // console.log(units)
         switch (unit) {
@@ -67,3 +57,5 @@ export default function CreateDataLabels (array){
     })
     return returnArray;
 }
+
+module.exports = CreateDateLabels;
