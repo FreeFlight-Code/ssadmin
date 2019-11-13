@@ -4,6 +4,9 @@ const React = require("react");
 // react plugin used to create charts
 const { Line, Bar } = require("react-chartjs-2");
 
+const salesPerStream = require("../labelhandlers/streamName").salesPerStream;
+const getData = require("../datahandlers/GetData").GetData;
+
 
 // reactstrap components
 const {Card,
@@ -13,7 +16,7 @@ const {Card,
 require("reactstrap");
 
 
-export default class Simpleview extends React.Component {
+export default class ViewsPerStream extends React.Component {
   constructor(props){
     super(props)
     this.state = {
@@ -46,7 +49,7 @@ export default class Simpleview extends React.Component {
               },
               ticks: {
                 suggestedMin: 0,
-                suggestedMax: 10,
+                suggestedMax: 0,
                 padding: 20,
                 fontColor: "#9a9a9a"
               }
@@ -69,7 +72,14 @@ export default class Simpleview extends React.Component {
         }
       }
     }
-  
+  }
+
+  componentDidMount(){
+    // console.log(salesPerStream(this.props.data.totalStreams))
+    getData("sales", this.props.days).then(res=>{
+      console.log(res)
+    })
+
   }
 
   passChartJS = canvas => {
@@ -130,6 +140,7 @@ export default class Simpleview extends React.Component {
 
 
   render() {
+    
     const {title, summary, icon, type} = this.props;
     return (
       <Card className="card-chart">

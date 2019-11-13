@@ -4,21 +4,25 @@ const React = require("react");
 // react plugin used to create charts
 const { Line, Bar } = require("react-chartjs-2");
 
+const salesPerStream = require("../labelhandlers/streamName").salesPerStream;
+const getData = require("../componentHandlers/GetData").GetData;
+
 
 // reactstrap components
-const {Card,
+const {
+  Card,
   CardHeader,
   CardBody,
   CardTitle} =
 require("reactstrap");
 
 
-export default class Simpleview extends React.Component {
+export default class SalesPerStream extends React.Component {
   constructor(props){
     super(props)
     this.state = {
       labels: [],
-      data: [1,5,2,345,43,534,34,34,4,334,54,4,554,4,5,45,45,3],
+      data: [],
       options: {
         maintainAspectRatio: false,
         legend: {
@@ -69,7 +73,40 @@ export default class Simpleview extends React.Component {
         }
       }
     }
-  
+  }
+
+  componentDidUpdate(){
+    console.log(this.props.data.totalOrders)
+    // this.setState({data: this.props.data.totalOrders})
+
+  }
+
+  getData(){
+
+
+  }
+
+  getLabels(){
+    if(this.state.data.totalOrders){
+      let array = this.state.data.totalOrders.map((el, i)=>{
+        return el.stream
+      })
+      console.log(array)
+      this.setState({
+        data: array
+      })
+    }
+  }
+
+  getData (){
+    if(this.state.data){
+      let array = this.state.data.map((el, i)=>{
+        return el.amount
+      })
+      this.setState({
+        data: array
+      })
+    }
   }
 
   passChartJS = canvas => {
@@ -82,7 +119,7 @@ export default class Simpleview extends React.Component {
     gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
     return {
-      labels: this.props.labels,
+      labels: this.state.labels,
       datasets: [
         {
           label: "Sales",
@@ -99,7 +136,7 @@ export default class Simpleview extends React.Component {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: this.props.data
+          data: this.state.data
         }
       ]
     };
@@ -130,6 +167,7 @@ export default class Simpleview extends React.Component {
 
 
   render() {
+    // console.log(this.state)
     const {title, summary, icon, type} = this.props;
     return (
       <Card className="card-chart">
