@@ -13,20 +13,17 @@ module.exports = function (days){
             
             const {totalOrders} = res;
 
-            //is there a name
-            if(totalOrders[i].stream){
-
-                //is stream name already in array
-                if (data.indexOf(totalOrders[i].stream)){
+                if (data.indexOf(totalOrders[i]._id)){
                     data.push(totalOrders[i].amount)
-                    labels.push(totalOrders[i].stream)
+                    labels.push(totalOrders[i]._id)
                 } else {
-                    let indexOfStreamName = data.indexOf(totalOrders[i].stream);
+                    let indexOfStreamName = data.indexOf(totalOrders[i]._id);
                     data[indexOfStreamName]+= totalOrders[i].amount;
                 }
-            }
         }
         let reducedData = data.reduce((total, num)=>total + num, 0)
+
+        
         // summary is what will be displayed at top of card
         let summary = `$${reducedData} Sales`;
         

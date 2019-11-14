@@ -4,17 +4,19 @@ import React from "react";
 // import Static from '../charts/Static.jsx';
 // import Views from '../charts/Views.jsx';
 import Simpleview from '../charts/Simpleview'
-import SalesPerStream from '../charts/SalesPerStream'
+// import SalesPerStream from '../charts/SalesPerStream'
 import Select from '../components/Inputs/Select'
 // reactstrap components
 import {
   Row,
   Col
 } from "reactstrap";
-// const getData = require("../datahandlers/GetData").GetData;
-// const getDateFromToday = require("../componentHandlers/GetData").getDateByDaysFromToday;
-const getLabels = require("../datahandlers/GetData").createDateLabels;
-// const filter = require("../datahandlers/filterData").filter;
+// const getLabels = require("../datahandlers/GetData").createDateLabels;
+const getSalesPerStream = require('../componentHandlers/salesPerStream');
+const allSales = require('../componentHandlers/allSales');
+const allApiCalls = require('../componentHandlers/allApiCalls');
+const allViews = require('../componentHandlers/allViews');
+const salesPerId = require('../componentHandlers/salesPerId');
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -30,64 +32,26 @@ class Dashboard extends React.Component {
     this.handleDaysFilter = this.handleDaysFilter.bind(this);
   }
 
-  componentDidMount(){
-    // this.updateData();
-  }
-
-  createLabels(){
-    this.setState({
-      defaultLabels: getLabels(this.state.days)
-    })
-  }
-
-  // filterData(){
-
-  //   this.setState({
-
-  //   })
-  // }
-
-  // async updateData(){
-  //   await getData("streams", this.state.days).then(res=>{
-  //     // console.log(res)
-  //     this.setState({
-  //       streamsData: res
-  //     })
-  //   })
-  //   await getData("sales", this.state.days).then(res=>{
-  //     // console.log(res)
-  //     this.setState({
-  //       salesData: res
-  //     })
-  //     this.createLabels();
-  //     this.filterData();
-  //   })
-  // }
-
   handleCompany(val){
     this.setState({
       company: val
     })
   }
 
-  async handleDaysFilter(val){
-    await this.setState({
+  handleDaysFilter(val){
+    this.setState({
       days: parseInt(val)
     })
-    this.updateData();
   }
 
   render() {
-    // console.log(this.state)
-    // const {defaultLabels} = this.state;
-    const {totalOrdersCount, orderSales} = this.state.salesData;
-    const {streamViews, totalStreamsCount} = this.state.streamsData;
+
     return (
         <div className="content">
           <Row>
             <div className="inputHeader">
               <Select handleCompany={this.handleCompany} location={document.location.pathname.split('/')[2]}/>
-              <select onChange={e=>this.handleDaysFilter(e.target.value)}>
+              <select value={this.state.days} onChange={e=>this.handleDaysFilter(e.target.value)}>
                 <option value={7} >7 days</option>
                 <option value={30}>30 days</option>
                 <option value={90}>90 days</option>
@@ -97,32 +61,51 @@ class Dashboard extends React.Component {
             </div>
           </Row>
           <Row>
-            <Col md="12">
+            <Col md="4">
               < Simpleview 
-                title="Views" 
-                summary={`Total Views: ${streamViews}  |  Streams Created: ${totalStreamsCount}`} 
-                type="line"
+                title="Total Sales" 
+                type="stat"
+                days={this.state.days}
+                functionCall={allSales}
+              />
+            </Col>
+            <Col md="4">
+              < Simpleview 
+                title="Total Views" 
+                type="stat"
+                days={this.state.days}
+                functionCall={allViews}
+              />
+            </Col>
+            <Col md="4">
+              < Simpleview 
+                title="API calls" 
+                type="stat"
+                days={this.state.days}
+                functionCall={allApiCalls}
               />
             </Col>
           </Row>
           <Row>
             <Col md="12">
               < Simpleview 
-                title="Sales" 
-                summary={`Total Orders: ${totalOrdersCount}  |  Revenue: $${orderSales}`}
-                type="line"
-              />
-            </Col>
-
-          </Row>
-          <Row>
-            <Col md="12">
-              {/* < SalesPerStream 
-                title="Sales per Stream" 
-                summary={`Total Sales: $${orderSales}`} 
+                title="Sales Per Stream" 
                 type="line"
                 days={this.state.days}
-              /> */}
+                functionCall={getSalesPerStream}
+                unit="Saleser"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col md="12">
+              < Simpleview 
+                title="Sales Per Id" 
+                type="line"
+                days={this.state.days}
+                functionCall={salesPerId}
+                unit="Sales"
+              />
             </Col>
           </Row>
         </div>

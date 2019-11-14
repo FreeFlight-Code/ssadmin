@@ -331,16 +331,4 @@ textarea.form-control{
     font-size: $font-paragraph;
   }
 }
-// df added custom dashboard input
-.inputHeader{
-    padding: 0 15px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-    select{
-        display: inline-block;
-        height: 50%;
-    }
-}
+

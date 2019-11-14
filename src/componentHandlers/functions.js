@@ -17,7 +17,7 @@ export function createDateLabels(numOfLabels){
 
 
 // type can be "sales" or "streams"
-export async function GetData (type, showDays) {
+export async function getData (type, showDays) {
 
     let newDate = getDateByDaysFromToday(showDays)
     // console.log(newDate, "...", type)

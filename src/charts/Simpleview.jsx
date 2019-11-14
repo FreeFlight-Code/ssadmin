@@ -13,12 +13,12 @@ const {Card,
 require("reactstrap");
 
 
-export default class Simpleview extends React.Component {
+export default class Simpleview extends React.PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      labels: [],
-      data: [1,5,2,345,43,534,34,34,4,334,54,4,554,4,5,45,45,3],
+      labels: ["no data found"],
+      data: [0],
       options: {
         maintainAspectRatio: false,
         legend: {
@@ -69,8 +69,34 @@ export default class Simpleview extends React.Component {
         }
       }
     }
-  
   }
+  componentDidMount(){
+    this.updateNow()
+  }
+  componentDidUpdate(prev){
+    if (prev.days !== this.props.days){
+      this.updateNow()
+    }
+  }
+  updateNow(){
+    let data = this.props.functionCall(this.props.days)
+    console.log(data)
+    data.then(res =>{
+      const {data, labels, summary, staticContent} = res;
+      if(staticContent){
+        this.setState({
+          staticContent: staticContent
+        })
+      } else {
+        this.setState({
+          data: data,
+          labels: labels,
+          summary: summary
+        })
+      }
+    })
+  }
+ 
 
   passChartJS = canvas => {
     const ctx = canvas.getContext("2d");
@@ -82,7 +108,7 @@ export default class Simpleview extends React.Component {
     gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
     return {
-      labels: this.props.labels,
+      labels: this.state.labels,
       datasets: [
         {
           label: "Sales",
@@ -99,7 +125,7 @@ export default class Simpleview extends React.Component {
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
           pointRadius: 4,
-          data: this.props.data
+          data: this.state.data
         }
       ]
     };
@@ -121,6 +147,10 @@ export default class Simpleview extends React.Component {
           options={this.state.options}
           />
         )
+      case "stat":
+        return (
+          <h1>Static Content</h1>
+        )
     
       default:
         console.log('error with chart type')
@@ -130,21 +160,31 @@ export default class Simpleview extends React.Component {
 
 
   render() {
-    const {title, summary, icon, type} = this.props;
+    console.log(this.state);
+    const {title, icon, type} = this.props;
+    const {summary, staticContent} = this.state;
     return (
       <Card className="card-chart">
       <CardHeader>
-          <h5 className="card-category">{summary}</h5>
+          <h5 className="card-category">{summary || ""}</h5>
           <CardTitle tag="h3">
           {icon ? <i className={`tim-icons ${icon} text-info`}/> : null}
           {title}
           </CardTitle>
       </CardHeader>
+{      staticContent ? 
+      <h1>{staticContent}</h1>
+  
+  
+
+:
+
+
       <CardBody>
           <div className="chart-area">
               {this.chartType(type)}
           </div>
-      </CardBody>
+      </CardBody>}
       </Card>
     )
   }

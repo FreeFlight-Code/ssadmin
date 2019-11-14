@@ -4,9 +4,6 @@ const React = require("react");
 // react plugin used to create charts
 const { Line, Bar } = require("react-chartjs-2");
 
-const salesPerStream = require("../labelhandlers/streamName").salesPerStream;
-const getData = require("../componentHandlers/GetData").GetData;
-
 
 // reactstrap components
 const {
@@ -78,11 +75,6 @@ export default class SalesPerStream extends React.Component {
   componentDidUpdate(){
     console.log(this.props.data.totalOrders)
     // this.setState({data: this.props.data.totalOrders})
-
-  }
-
-  getData(){
-
 
   }
 
