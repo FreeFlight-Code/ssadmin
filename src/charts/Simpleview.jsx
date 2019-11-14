@@ -111,7 +111,7 @@ export default class Simpleview extends React.PureComponent {
       labels: this.state.labels,
       datasets: [
         {
-          label: "Sales",
+          label: this.props.unit,
           fill: true,
           backgroundColor: "rgba(100,100,255,.4)",
           borderColor: "#1f8ef1",
