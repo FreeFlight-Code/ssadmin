@@ -18,8 +18,8 @@ export default class Simpleview extends React.PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      labels: ["no data found"],
-      data: [0],
+      labels: [],
+      data: [],
       options: {
         maintainAspectRatio: false,
         legend: {
@@ -81,7 +81,6 @@ export default class Simpleview extends React.PureComponent {
   }
   updateNow(){
     let data = this.props.functionCall(this.props.days)
-    console.log(data)
     data.then(res =>{
       const {data, labels, summary, staticContent} = res;
       if(staticContent){
@@ -156,24 +155,27 @@ export default class Simpleview extends React.PureComponent {
 
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     const {title, icon, type} = this.props;
-    const {summary, staticContent} = this.state;
-    return (
-      <Card className="card-chart">
-      <CardHeader>
-          <h5 className="card-category">{summary || ""}</h5>
-          <CardTitle tag="h3">
-          {icon ? <i className={`tim-icons ${icon} text-info`}/> : null}
-          {title}
-          </CardTitle>
-      </CardHeader>
-      <CardBody>
-          <div className="chart-area">
-              {this.chartType(type)}
-          </div>
-      </CardBody>
-      </Card>
-    )
+    const {summary, staticContent, data} = this.state;
+    if (data.length){
+      return (
+        <Card className="card-chart">
+        <CardHeader>
+            <h5 className="card-category">{summary || ""}</h5>
+            <CardTitle tag="h3">
+            {icon ? <i className={`tim-icons ${icon} text-info`}/> : null}
+            {title}
+            </CardTitle>
+        </CardHeader>
+        <CardBody>
+            <div className="chart-area">
+                {this.chartType(type)}
+            </div>
+        </CardBody>
+        </Card>
+      )
+
+    } else return null
   }
 }

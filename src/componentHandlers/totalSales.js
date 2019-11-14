@@ -1,11 +1,9 @@
 const {getData} = require('./functions')
 
 module.exports = function (days){
-
-    return new Promise ((resolve, reject)=>{
-
-        resolve({
-            staticContent: "$4,567"
-        })
+    return getData("sales", days).then((res)=>{
+        return {
+            staticContent: `$${res.orderSales}`
+        }
     })
 }

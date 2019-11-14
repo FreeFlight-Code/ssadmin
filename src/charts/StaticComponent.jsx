@@ -26,21 +26,18 @@ export default class Simpleview extends React.PureComponent {
   }
   updateNow(){
     let data = this.props.functionCall(this.props.days)
-    console.log(data)
     data.then(res =>{
       const {staticContent} = res;
-      if(staticContent){
-        this.setState({
-          staticContent: staticContent
-        })
-      }
+      this.setState({
+        staticContent: staticContent
+      })
     })
   }
 
 
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     const {title, icon} = this.props;
     const {summary, staticContent} = this.state;
     return (
