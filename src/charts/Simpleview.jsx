@@ -6,11 +6,12 @@ const { Line, Bar } = require("react-chartjs-2");
 
 
 // reactstrap components
-const {Card,
+const {
+  Card,
   CardHeader,
   CardBody,
-  CardTitle} =
-require("reactstrap");
+  CardTitle
+} =require("reactstrap");
 
 
 export default class Simpleview extends React.PureComponent {
@@ -147,11 +148,6 @@ export default class Simpleview extends React.PureComponent {
           options={this.state.options}
           />
         )
-      case "stat":
-        return (
-          <h1>Static Content</h1>
-        )
-    
       default:
         console.log('error with chart type')
         return null
@@ -172,19 +168,11 @@ export default class Simpleview extends React.PureComponent {
           {title}
           </CardTitle>
       </CardHeader>
-{      staticContent ? 
-      <h1>{staticContent}</h1>
-  
-  
-
-:
-
-
       <CardBody>
           <div className="chart-area">
               {this.chartType(type)}
           </div>
-      </CardBody>}
+      </CardBody>
       </Card>
     )
   }

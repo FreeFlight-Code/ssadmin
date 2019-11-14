@@ -1,7 +1,7 @@
 
 import React from "react";
 
-// import Static from '../charts/Static.jsx';
+import StaticComponent from '../charts/StaticComponent.jsx';
 // import Views from '../charts/Views.jsx';
 import Simpleview from '../charts/Simpleview'
 // import SalesPerStream from '../charts/SalesPerStream'
@@ -13,9 +13,9 @@ import {
 } from "reactstrap";
 // const getLabels = require("../datahandlers/GetData").createDateLabels;
 const getSalesPerStream = require('../componentHandlers/salesPerStream');
-const allSales = require('../componentHandlers/allSales');
-const allApiCalls = require('../componentHandlers/allApiCalls');
-const allViews = require('../componentHandlers/allViews');
+const totalSales = require('../componentHandlers/totalSales');
+const totalApiCalls = require('../componentHandlers/totalApiCalls');
+const totalViews = require('../componentHandlers/totalViews');
 const salesPerId = require('../componentHandlers/salesPerId');
 
 class Dashboard extends React.Component {
@@ -62,27 +62,27 @@ class Dashboard extends React.Component {
           </Row>
           <Row>
             <Col md="4">
-              < Simpleview 
+              < StaticComponent 
                 title="Total Sales" 
                 type="stat"
                 days={this.state.days}
-                functionCall={allSales}
+                functionCall={totalSales}
               />
             </Col>
             <Col md="4">
-              < Simpleview 
+              < StaticComponent 
                 title="Total Views" 
                 type="stat"
                 days={this.state.days}
-                functionCall={allViews}
+                functionCall={totalViews}
               />
             </Col>
             <Col md="4">
-              < Simpleview 
+              < StaticComponent 
                 title="API calls" 
                 type="stat"
                 days={this.state.days}
-                functionCall={allApiCalls}
+                functionCall={totalApiCalls}
               />
             </Col>
           </Row>
@@ -93,7 +93,7 @@ class Dashboard extends React.Component {
                 type="line"
                 days={this.state.days}
                 functionCall={getSalesPerStream}
-                unit="Saleser"
+                unit="Sales"
               />
             </Col>
           </Row>
