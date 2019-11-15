@@ -75,25 +75,23 @@ export default class Simpleview extends React.PureComponent {
     this.updateNow()
   }
   componentDidUpdate(prev){
-    if (prev.days !== this.props.days){
+    if (
+      prev.days !== this.props.days ||
+      prev.company !== this.props.company
+    ){
       this.updateNow()
     }
   }
   updateNow(){
-    let data = this.props.functionCall(this.props.days)
+    let isCompany = this.props.company ? this.props.company : null;
+    let data = this.props.functionCall(this.props.days, isCompany)
     data.then(res =>{
-      const {data, labels, summary, staticContent} = res;
-      if(staticContent){
-        this.setState({
-          staticContent: staticContent
-        })
-      } else {
-        this.setState({
-          data: data,
-          labels: labels,
-          summary: summary
-        })
-      }
+      const {data, labels, summary} = res;
+      this.setState({
+        data: data,
+        labels: labels,
+        summary: summary
+      })
     })
   }
  
@@ -157,7 +155,7 @@ export default class Simpleview extends React.PureComponent {
   render() {
     // console.log(this.state);
     const {title, icon, type} = this.props;
-    const {summary, staticContent, data} = this.state;
+    const {summary, data} = this.state;
     if (data.length){
       return (
         <Card className="card-chart">

@@ -12,18 +12,19 @@ import {
   Col
 } from "reactstrap";
 // const getLabels = require("../datahandlers/GetData").createDateLabels;
-const getSalesPerStream = require('../componentHandlers/salesPerStream');
+const salesPerStream = require('../componentHandlers/salesPerStream');
 const totalSales = require('../componentHandlers/totalSales');
 const totalApiCalls = require('../componentHandlers/totalApiCalls');
 const totalViews = require('../componentHandlers/totalViews');
-const salesPerId = require('../componentHandlers/salesPerId');
+const salesPerUser = require('../componentHandlers/salesPerUser');
+const totalProducts = require('../componentHandlers/totalProducts');
 
 class Dashboard extends React.Component {
   constructor(props){
     super(props)
     this.state={
       defaultLabels: [],
-      company: "Simustream",
+      company: "",
       streamsData: {},
       salesData: {},
       days: 365
@@ -31,11 +32,31 @@ class Dashboard extends React.Component {
     this.handleCompany = this.handleCompany.bind(this);
     this.handleDaysFilter = this.handleDaysFilter.bind(this);
   }
+  componentDidMount(){
+    let page = document.location.pathname.split('/')[2];
+    switch(page){
+      case "ent-client":
+          this.setState({
+            company: "5d4016512ffd5e0d2fc346b4"
+          })
+          break;
+      case "sub-client":
+          this.setState({
+            company: 2
+          })
+          break;
+      default:
+        this.setState({
+          company: ""
+        })
+    }
+  }
 
   handleCompany(val){
     this.setState({
       company: val
     })
+    // console.log(val)
   }
 
   handleDaysFilter(val){
@@ -45,12 +66,12 @@ class Dashboard extends React.Component {
   }
 
   render() {
-
+    // console.log(this.state)
     return (
         <div className="content">
           <Row>
             <div className="inputHeader">
-              <Select handleCompany={this.handleCompany} location={document.location.pathname.split('/')[2]}/>
+              <Select value={this.state.company} handleCompany={this.handleCompany} location={document.location.pathname.split('/')[2]}/>
               <select value={this.state.days} onChange={e=>this.handleDaysFilter(e.target.value)}>
                 <option value={7} >7 days</option>
                 <option value={30}>30 days</option>
@@ -60,7 +81,7 @@ class Dashboard extends React.Component {
               </select>
             </div>
           </Row>
-          <Row>
+          {/* <Row>
             <Col md="4">
               < StaticComponent 
                 title="Total Sales" 
@@ -87,27 +108,54 @@ class Dashboard extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col md="12">
-              < Simpleview 
-                title="Sales Per Stream" 
-                type="line"
+            <Col md="4">
+              < StaticComponent 
+                title="Products Sold" 
+                type="stat"
                 days={this.state.days}
-                functionCall={getSalesPerStream}
-                unit="Sales"
+                functionCall={totalProducts}
               />
             </Col>
-          </Row>
+            <Col md="4">
+              < StaticComponent 
+                title="Total Sales" 
+                type="stat"
+                days={this.state.days}
+                functionCall={totalSales}
+              />
+            </Col>
+            <Col md="4">
+              < StaticComponent 
+                title="Total Sales" 
+                type="stat"
+                days={this.state.days}
+                functionCall={totalSales}
+              />
+            </Col>
+          </Row> */}
           <Row>
             <Col md="12">
               < Simpleview 
-                title="Sales Per Id" 
+                days={this.state.days} // required
+                company={this.state.company} // required
+                title="Sales Per Stream" 
                 type="line"
-                days={this.state.days}
-                functionCall={salesPerId}
+                functionCall={salesPerStream}
                 unit="Sales"
               />
             </Col>
           </Row>
+          {/* <Row>
+            <Col md="12">
+              < Simpleview 
+                title="Sales Per User" 
+                type="line"
+                days={this.state.days}
+                functionCall={salesPerUser}
+                unit="Sales"
+              />
+            </Col>
+          </Row> */}
         </div>
     );
   }

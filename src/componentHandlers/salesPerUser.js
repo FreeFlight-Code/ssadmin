@@ -13,11 +13,11 @@ module.exports = function (days){
             
             const {totalOrders} = res;
 
-                if (data.indexOf(totalOrders[i]._id)){
+                if (data.indexOf(totalOrders[i].user)){
                     data.push(totalOrders[i].amount)
-                    labels.push(totalOrders[i]._id)
+                    labels.push(totalOrders[i].user)
                 } else {
-                    let indexOfStreamName = data.indexOf(totalOrders[i]._id);
+                    let indexOfStreamName = data.indexOf(totalOrders[i].user);
                     data[indexOfStreamName]+= totalOrders[i].amount;
                 }
         }

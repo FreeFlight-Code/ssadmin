@@ -20,12 +20,16 @@ export default class Simpleview extends React.PureComponent {
     this.updateNow()
   }
   componentDidUpdate(prev){
-    if (prev.days !== this.props.days){
+    if (
+      prev.days !== this.props.days ||
+      prev.company !== this.props.company
+    ){
       this.updateNow()
     }
   }
   updateNow(){
-    let data = this.props.functionCall(this.props.days)
+    let companyId = this.props.company ? this.props.company : null;
+    let data = this.props.functionCall(this.props.days, companyId)
     data.then(res =>{
       const {staticContent} = res;
       this.setState({

@@ -1,4 +1,4 @@
-const {getData} = require('./functions')
+// const {getData} = require('./functions')
 
 module.exports = function (days){
 
@@ -11,3 +11,4 @@ module.exports = function (days){
         })
     })
 }
+
