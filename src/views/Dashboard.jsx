@@ -5,6 +5,7 @@ import StaticComponent from '../charts/StaticComponent.jsx';
 import Simpleview from '../charts/Simpleview';
 import SelectCompany from '../components/Inputs/SelectCompany';
 import SelectDay from '../components/Inputs/SelectDay';
+import BasicTable from '../components/BasicTable/BasicTable.jsx';
 
 // reactstrap components
 import {
@@ -17,6 +18,7 @@ const totalApiCalls = require('../componentHandlers/totalApiCalls');
 const totalViews = require('../componentHandlers/totalViews');
 const salesPerUser = require('../componentHandlers/salesPerUser');
 const totalProducts = require('../componentHandlers/totalProducts');
+const top5ViewsCustomers = require('../componentHandlers/top5ViewsCustomers');
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -71,7 +73,7 @@ class Dashboard extends React.Component {
           <Row>
             <div className="inputHeader">
               <SelectCompany id='companyIdDropdown' handleCompany={this.handleCompany} location={document.location.pathname.split('/')[2]}/>
-              <SelectDay/>
+              <SelectDay value={this.state.days}/>
             </div>
           </Row>
           <Row>
@@ -155,6 +157,13 @@ class Dashboard extends React.Component {
                 unit="Sales"
               />
             </Col>
+          </Row>
+          <Row>
+            <BasicTable 
+            title="happy table"
+            headers={["Name", "Country", "City", "Salary"]}
+            functionCall={top5ViewsCustomers}
+            />
           </Row>
         </div>
     );

@@ -17,9 +17,9 @@
 */
 import Dashboard from "views/Dashboard.jsx";
 // import Icons from "views/Icons.jsx";
-import Map from "views/Map.jsx";
+// import Map from "views/Map.jsx";
 // import Notifications from "views/Notifications.jsx";
-// import TableList from "views/TableList.jsx";
+import TableList from "views/TableList.jsx";
 // import Typography from "views/Typography.jsx";
 import UserProfile from "views/UserProfile.jsx";
 
@@ -55,14 +55,14 @@ var routes = [
   //   component: Icons,
   //   layout: "/admin"
   // },
-  {
-    path: "/map",
-    name: "Map",
-    rtlName: "خرائط",
-    icon: "tim-icons icon-pin",
-    component: Map,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/map",
+  //   name: "Map",
+  //   rtlName: "خرائط",
+  //   icon: "tim-icons icon-pin",
+  //   component: Map,
+  //   layout: "/admin"
+  // },
   // {
   //   path: "/notifications",
   //   name: "Notifications",
@@ -79,14 +79,14 @@ var routes = [
     component: UserProfile,
     layout: "/admin"
   },
-  // {
-  //   path: "/tables",
-  //   name: "Table List",
-  //   rtlName: "قائمة الجدول",
-  //   icon: "tim-icons icon-puzzle-10",
-  //   component: TableList,
-  //   layout: "/admin"
-  // },
+  {
+    path: "/tables",
+    name: "Table List",
+    rtlName: "قائمة الجدول",
+    icon: "tim-icons icon-puzzle-10",
+    component: TableList,
+    layout: "/admin"
+  },
   // {
   //   path: "/typography",
   //   name: "Typography",
