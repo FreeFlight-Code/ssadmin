@@ -2,16 +2,15 @@
 import React from "react";
 
 import StaticComponent from '../charts/StaticComponent.jsx';
-// import Views from '../charts/Views.jsx';
-import Simpleview from '../charts/Simpleview'
-// import SalesPerStream from '../charts/SalesPerStream'
-import Select from '../components/Inputs/Select'
+import Simpleview from '../charts/Simpleview';
+import SelectCompany from '../components/Inputs/SelectCompany';
+import SelectDay from '../components/Inputs/SelectDay';
+
 // reactstrap components
 import {
   Row,
   Col
 } from "reactstrap";
-// const getLabels = require("../datahandlers/GetData").createDateLabels;
 const salesPerStream = require('../componentHandlers/salesPerStream');
 const totalSales = require('../componentHandlers/totalSales');
 const totalApiCalls = require('../componentHandlers/totalApiCalls');
@@ -42,7 +41,7 @@ class Dashboard extends React.Component {
           break;
       case "sub-client":
           this.setState({
-            company: 2
+            company: "5d4016512ffd5e0d2fc346b4"
           })
           break;
       default:
@@ -71,22 +70,17 @@ class Dashboard extends React.Component {
         <div className="content">
           <Row>
             <div className="inputHeader">
-              <Select value={this.state.company} handleCompany={this.handleCompany} location={document.location.pathname.split('/')[2]}/>
-              <select value={this.state.days} onChange={e=>this.handleDaysFilter(e.target.value)}>
-                <option value={7} >7 days</option>
-                <option value={30}>30 days</option>
-                <option value={90}>90 days</option>
-                <option value={180}>180 days</option>
-                <option value={365}>last year</option>
-              </select>
+              <SelectCompany id='companyIdDropdown' handleCompany={this.handleCompany} location={document.location.pathname.split('/')[2]}/>
+              <SelectDay/>
             </div>
           </Row>
-          {/* <Row>
+          <Row>
             <Col md="4">
               < StaticComponent 
                 title="Total Sales" 
                 type="stat"
-                days={this.state.days}
+                days={this.state.days} // required
+                company={this.state.company} // required
                 functionCall={totalSales}
               />
             </Col>
@@ -94,7 +88,8 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Total Views" 
                 type="stat"
-                days={this.state.days}
+                days={this.state.days} // required
+                company={this.state.company} // required
                 functionCall={totalViews}
               />
             </Col>
@@ -102,7 +97,8 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="API calls" 
                 type="stat"
-                days={this.state.days}
+                days={this.state.days} // required
+                company={this.state.company} // required
                 functionCall={totalApiCalls}
               />
             </Col>
@@ -112,7 +108,8 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Products Sold" 
                 type="stat"
-                days={this.state.days}
+                days={this.state.days} // required
+                company={this.state.company} // required
                 functionCall={totalProducts}
               />
             </Col>
@@ -120,7 +117,8 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Total Sales" 
                 type="stat"
-                days={this.state.days}
+                days={this.state.days} // required
+                company={this.state.company} // required
                 functionCall={totalSales}
               />
             </Col>
@@ -128,16 +126,17 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Total Sales" 
                 type="stat"
-                days={this.state.days}
+                days={this.state.days} // required
+                company={this.state.company} // required 
                 functionCall={totalSales}
               />
             </Col>
-          </Row> */}
+          </Row>
           <Row>
             <Col md="12">
               < Simpleview 
                 days={this.state.days} // required
-                company={this.state.company} // required
+                company={this.state.company} // required 
                 title="Sales Per Stream" 
                 type="line"
                 functionCall={salesPerStream}
@@ -145,17 +144,18 @@ class Dashboard extends React.Component {
               />
             </Col>
           </Row>
-          {/* <Row>
+          <Row>
             <Col md="12">
               < Simpleview 
+                days={this.state.days} // required
+                company={this.state.company} // required 
                 title="Sales Per User" 
                 type="line"
-                days={this.state.days}
                 functionCall={salesPerUser}
                 unit="Sales"
               />
             </Col>
-          </Row> */}
+          </Row>
         </div>
     );
   }

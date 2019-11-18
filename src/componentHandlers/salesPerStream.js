@@ -11,11 +11,10 @@ module.exports = function (days, companyId){
         return getData("sales", days).then(res=>{
         
             const data = [], labels = [];
-            // console.log(companyId)
+
             if (companyId) res.totalOrders = res.totalOrders.filter((el)=>{
                 return el.user === companyId;
             })
-            console.log(res.totalOrders, "maybe???")
             for(let i = 0; i < res.totalOrders.length; i++){
                 
                 const {totalOrders} = res;
@@ -33,7 +32,6 @@ module.exports = function (days, companyId){
                     }
                 }
             }
-            console.log(data)
             let reducedData = data.reduce((total, num)=>total + num, 0)
             // summary is what will be displayed at top of card
             let summary = `$${reducedData} Sales`;

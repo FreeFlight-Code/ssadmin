@@ -83,7 +83,8 @@ export default class Simpleview extends React.PureComponent {
     }
   }
   updateNow(){
-    let isCompany = this.props.company ? this.props.company : null;
+    try{
+          let isCompany = this.props.company ? this.props.company : null;
     let data = this.props.functionCall(this.props.days, isCompany)
     data.then(res =>{
       const {data, labels, summary} = res;
@@ -93,6 +94,9 @@ export default class Simpleview extends React.PureComponent {
         summary: summary
       })
     })
+    }catch(e){
+      console.error(e)
+    }
   }
  
 
