@@ -19,6 +19,7 @@ const totalViews = require('../componentHandlers/totalViews');
 const salesPerUser = require('../componentHandlers/salesPerUser');
 const totalProducts = require('../componentHandlers/totalProducts');
 const top5ViewsCustomers = require('../componentHandlers/top5ViewsCustomers');
+const top5SalesCustomers = require('../componentHandlers/top5SalesCustomers');
 
 class Dashboard extends React.Component {
   constructor(props){
@@ -160,9 +161,18 @@ class Dashboard extends React.Component {
           </Row>
           <Row>
             <BasicTable 
-            title="happy table"
-            headers={["Name", "Country", "City", "Salary"]}
-            functionCall={top5ViewsCustomers}
+              days={this.state.days} // required
+              title="Most Sales"
+              headers={["Client", "Sales"]}
+              functionCall={top5SalesCustomers}
+            />
+          </Row>
+          <Row>
+            <BasicTable 
+              days={this.state.days} // required
+              title="Most Views"
+              headers={["Client", "Views"]}
+              functionCall={top5ViewsCustomers}
             />
           </Row>
         </div>
