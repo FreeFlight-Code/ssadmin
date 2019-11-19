@@ -58,7 +58,6 @@ class Dashboard extends React.Component {
     this.setState({
       company: val
     })
-    // console.log(val)
   }
 
   handleDaysFilter(val){
@@ -68,7 +67,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    // console.log(this.state)
     return (
         <div className="content">
           <Row>

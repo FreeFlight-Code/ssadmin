@@ -5,11 +5,11 @@ module.exports = (days)=>{
         //return an array of arrays
         //with user then total sales
 
+            // console.log(res)
         let max = 0;
         let maxIndex = 0;
         let returnArray = [];
         let returnArrayLength = 5;
-        returnArray.length = returnArrayLength;
         for (let topFive = 0; topFive < returnArrayLength; topFive++){
             for (let i = 0; i < res.data.length; i++){
                 if (res.data[i] > max) {
@@ -17,6 +17,7 @@ module.exports = (days)=>{
                 };
             }
             if (!returnArray[topFive]) returnArray[topFive] = [];
+            // console.log(returnArray)
             returnArray[topFive][0] = (res.labels.splice(maxIndex, 1)[0]);
             returnArray[topFive][1] = (res.data.splice(maxIndex, 1)[0]);
             max = 0;

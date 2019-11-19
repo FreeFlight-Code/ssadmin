@@ -24,7 +24,6 @@ export default class BasicTable extends React.Component {
       prev.days !== this.props.days ||
       prev.rows !== this.props.rows
     ){
-      console.log('updated')
       this.updateNow();
     }
   }

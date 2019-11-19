@@ -6,21 +6,18 @@ module.exports = function (days, companyId){
     // data is views per stream
     
     return getData("streams", days).then(res=>{
-        // console.log(res.totalStreams)
         try{
             const data = [], labels = [];
             if (companyId) res.totalStreams = res.totalStreams.filter((el)=>{
                 return el.user === companyId;
             })
-            console.log(res.totalStreams)
-            for(let i = 0; i < res.totalStreams.length; i++){
-                const {totalStreams} = res;
-                console.log(res)
-                // if user is found in labels
-                if (labels.indexOf(totalStreams[i].user)){
+            const {totalStreams} = res;
+            for(let i = 0; i < totalStreams.length; i++){
+                // if user is found in labels add it
+                if (labels.indexOf(totalStreams[i].user) === -1){
                     data.push(totalStreams[i].views)
                     labels.push(totalStreams[i].user)
-                // otherwise add views to 
+                // otherwise add views to labels
                 } else {
                     let indexOfStreamName = labels.indexOf(totalStreams[i].user);
                     data[indexOfStreamName]+= totalStreams[i].views;
@@ -29,7 +26,7 @@ module.exports = function (days, companyId){
             let reducedData = data.reduce((total, num)=>total + num, 0)
             
             // summary is what will be displayed at top of card
-            let summary = `$${reducedData} Sales`;
+            let summary = `${reducedData} Views`;
                 return {
                     data: data, 
                     labels: labels,
