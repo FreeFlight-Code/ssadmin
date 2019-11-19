@@ -26,13 +26,13 @@ function Select (props){
 
         case "ent-client":
         return (
-            <select onChange={e=>{props.handleCompany(e.target.value)}}>
+            <select onChange={e=>{props.handleCompanyFilter(e.target.value)}}>
                 {getEnterpriseClients()}
             </select>
         )
         case "sub-client":
         return (
-            <select onChange={e=>{props.handleCompany(e.target.value)}}>
+            <select onChange={e=>{props.handleCompanyFilter(e.target.value)}}>
                 {getSubscriptionClients()}
             </select>
         )

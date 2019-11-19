@@ -9,10 +9,10 @@ module.exports = function (days, companyId){
     return getData("sales", days).then(res=>{
         try{
             const data = [], labels = [];
-            for(let i = 0; i < res.totalOrders.length; i++){
             if (companyId) res.totalOrders = res.totalOrders.filter((el)=>{
                 return el.user === companyId;
             })
+            for(let i = 0; i < res.totalOrders.length; i++){
                 
                 const {totalOrders} = res;
     

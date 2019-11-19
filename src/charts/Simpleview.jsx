@@ -84,16 +84,16 @@ export default class Simpleview extends React.PureComponent {
   }
   updateNow(){
     try{
-          let isCompany = this.props.company ? this.props.company : null;
-    let data = this.props.functionCall(this.props.days, isCompany)
-    data.then(res =>{
-      const {data, labels, summary} = res;
-      this.setState({
-        data: data,
-        labels: labels,
-        summary: summary
+      let isCompany = this.props.company ? this.props.company : null;
+      let data = this.props.functionCall(this.props.days, isCompany)
+      data.then(res =>{
+        const {data, labels, summary} = res;
+        this.setState({
+          data: data,
+          labels: labels,
+          summary: summary
+        })
       })
-    })
     }catch(e){
       console.error(e)
     }

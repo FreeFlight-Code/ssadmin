@@ -16,13 +16,27 @@ export default class BasicTable extends React.Component {
     }
   }
 
-  async componentDidMount(){
-    const {days} = this.props;
-    const rows = await this.props.functionCall(days)
-    this.setState({
-      rows: rows,
-      days: days
-    })
+  componentDidMount(){
+    this.updateNow()
+  }
+  componentDidUpdate(prev){
+    if (
+      prev.days !== this.props.days ||
+      prev.rows !== this.props.rows
+    ){
+      console.log('updated')
+      this.updateNow();
+    }
+  }
+  async updateNow(){
+    try{
+      let rows = await this.props.functionCall(this.props.days)
+      this.setState({
+        rows: rows
+      })
+    }catch(e){
+      console.error(e)
+    }
   }
 
   render (){

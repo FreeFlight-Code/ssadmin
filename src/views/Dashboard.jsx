@@ -31,7 +31,7 @@ class Dashboard extends React.Component {
       salesData: {},
       days: 365
     }
-    this.handleCompany = this.handleCompany.bind(this);
+    this.handleCompanyFilter = this.handleCompanyFilter.bind(this);
     this.handleDaysFilter = this.handleDaysFilter.bind(this);
   }
   componentDidMount(){
@@ -54,7 +54,7 @@ class Dashboard extends React.Component {
     }
   }
 
-  handleCompany(val){
+  handleCompanyFilter(val){
     this.setState({
       company: val
     })
@@ -73,8 +73,8 @@ class Dashboard extends React.Component {
         <div className="content">
           <Row>
             <div className="inputHeader">
-              <SelectCompany id='companyIdDropdown' handleCompany={this.handleCompany} location={document.location.pathname.split('/')[2]}/>
-              <SelectDay value={this.state.days}/>
+              <SelectCompany id='companyIdDropdown' handleCompanyFilter={this.handleCompanyFilter} location={document.location.pathname.split('/')[2]}/>
+              <SelectDay handleDaysFilter={this.handleDaysFilter} value={this.state.days}/>
             </div>
           </Row>
           <Row>

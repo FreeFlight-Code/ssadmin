@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default (props)=>{
+export default function SelectDay (props){
     const {value} = props;
     return (
-        <select value={value} onChange={e=>this.handleDaysFilter(e.target.value)}>
+        <select value={value} onChange={e=>props.handleDaysFilter(e.target.value)}>
             <option value={7} >7 days</option>
             <option value={30}>30 days</option>
             <option value={90}>90 days</option>
