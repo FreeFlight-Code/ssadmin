@@ -1,5 +1,3 @@
-// const {getData} = require('./functions')
-
 module.exports = function (days){
 
     //api call for allApiCalls

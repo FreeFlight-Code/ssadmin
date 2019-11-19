@@ -1,4 +1,4 @@
-const {getData} = require('./functions')
+const {getData, sortBy, createArray, filterBy, getFirstOfArray} = require('./functions')
 
 module.exports = function (days, companyId){
     //  returns sales per stream
@@ -9,29 +9,13 @@ module.exports = function (days, companyId){
 
     if(days){
         return getData("sales", days).then(res=>{
-        
-            const data = [], labels = [];
 
-            if (companyId) res.totalOrders = res.totalOrders.filter((el)=>{
-                return el.user === companyId;
-            })
-            for(let i = 0; i < res.totalOrders.length; i++){
-                
-                const {totalOrders} = res;
+            let {totalOrders} = res;
+            if (companyId) totalOrders = filterBy(totalOrders, "stream", companyId);            totalOrders = sortBy.hl(totalOrders, "amount")
+            const labels = createArray(totalOrders, "stream");
+            const data = createArray(totalOrders, "amount");
 
-                //is there a name
-                if(totalOrders[i].stream){
 
-                    //is stream name already in array
-                    if (data.indexOf(totalOrders[i].stream)){
-                        data.push(totalOrders[i].amount)
-                        labels.push(totalOrders[i].stream)
-                    } else {
-                        let indexOfStreamName = data.indexOf(totalOrders[i].stream);
-                        data[indexOfStreamName]+= totalOrders[i].amount;
-                    }
-                }
-            }
             let reducedData = data.reduce((total, num)=>total + num, 0)
             // summary is what will be displayed at top of card
             let summary = `$${reducedData} Sales`;

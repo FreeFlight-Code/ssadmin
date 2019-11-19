@@ -12,14 +12,16 @@ import {
   Row,
   Col
 } from "reactstrap";
-const salesPerStream = require('../componentHandlers/salesPerStream');
-const totalSales = require('../componentHandlers/totalSales');
-const totalApiCalls = require('../componentHandlers/totalApiCalls');
-const totalViews = require('../componentHandlers/totalViews');
-const salesPerUser = require('../componentHandlers/salesPerUser');
-const totalProducts = require('../componentHandlers/totalProducts');
-const top5ViewsCustomers = require('../componentHandlers/top5ViewsCustomers');
-const top5SalesCustomers = require('../componentHandlers/top5SalesCustomers');
+const {
+  top5SalesCustomers,
+  top5ViewsCustomers,
+  totalProducts,
+  totalViews,
+  salesPerUser,
+  salesPerStream,
+  totalSales,
+  totalApiCalls
+} = require('../componentHandlers/apiCalls')
 
 class Dashboard extends React.Component {
   constructor(props){
