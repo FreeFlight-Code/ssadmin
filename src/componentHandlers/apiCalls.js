@@ -6,6 +6,8 @@ const totalProductsSold = require('./totalProductsSold');
 const totalSales = require('./totalSales');
 const totalViews = require('./totalViews');
 const totalApiCalls = require('./totalApiCalls');
+const getSubscriptionClients = require('../componentHandlers/getSubscriptionClients')
+const getEnterpriseClients = require('../componentHandlers/getEnterpriseClients')
 
 module.exports = {
     top5SalesCustomers,
@@ -15,5 +17,7 @@ module.exports = {
     totalViews,
     salesPerUser,
     salesPerStream,
-    totalApiCalls
+    totalApiCalls,
+    getEnterpriseClients,
+    getSubscriptionClients
 }

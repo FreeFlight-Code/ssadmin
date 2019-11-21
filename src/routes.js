@@ -27,7 +27,6 @@ var routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    rtlName: "لوحة القيادة",
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
     layout: "/admin"
@@ -35,7 +34,6 @@ var routes = [
   {
     path: "/ent-client",
     name: "Enterprise",
-    rtlName: "لوحة القيادة",
     icon: "tim-icons icon-chart-pie-36",
     component: Dashboard,
     layout: "/admin"
