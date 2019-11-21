@@ -43,26 +43,28 @@ class Top5Views extends React.Component {
 
   render (){
     const {array} = this.state;
-    return(
-      <Card>
-          <CardHeader>
-              <CardTitle tag="h4">Top 5 Viewed Accounts</CardTitle>
-          </CardHeader>
-          <CardBody>
-              <Table className="tablesorter" responsive>
-                <thead className="text-primary">
-                  <tr>
-                    <th>User</th>
-                    <th>Views</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <TableData data={array}/>
-                </tbody>
-              </Table>
-          </CardBody>
-      </Card>
-    )
+    if(array && array.length){
+        return(
+          <Card>
+              <CardHeader>
+                  <CardTitle tag="h4">Top 5 Viewed Accounts</CardTitle>
+              </CardHeader>
+              <CardBody>
+                  <Table className="tablesorter" responsive>
+                    <thead className="text-primary">
+                      <tr>
+                        <th>User</th>
+                        <th>Views</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <TableData data={array}/>
+                    </tbody>
+                  </Table>
+              </CardBody>
+          </Card>
+        )
+    } else return null
   }
 }
 

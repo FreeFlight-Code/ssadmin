@@ -14,7 +14,7 @@ import {
   Col
 } from "reactstrap";
 const {
-  totalProducts,
+  totalProductsSold,
   totalViews,
   salesPerUser,
   salesPerStream,
@@ -77,25 +77,25 @@ class Dashboard extends React.Component {
             </div>
           </Row>
           <Row>
-            <Col md="4">
+            <Col md="4" xl="2">
               < StaticComponent 
-                title="Total Sales" 
+                title="Completed Sales" 
                 type="stat"
                 days={this.state.days} // required
                 company={this.state.company} // required
                 functionCall={totalSales}
               />
             </Col>
-            <Col md="4">
+            <Col md="4" xl="2">
               < StaticComponent 
-                title="Total Views" 
+                title="Stream Views" 
                 type="stat"
                 days={this.state.days} // required
                 company={this.state.company} // required
                 functionCall={totalViews}
               />
             </Col>
-            <Col md="4">
+            <Col md="4" xl="2">
               < StaticComponent 
                 title="API calls" 
                 type="stat"
@@ -104,35 +104,34 @@ class Dashboard extends React.Component {
                 functionCall={totalApiCalls}
               />
             </Col>
-          </Row>
-          <Row>
-            <Col md="4">
+            <Col md="4" xl="2">
+              < StaticComponent 
+                title="Products Clicked" 
+                type="stat"
+                days={this.state.days} // required
+                company={this.state.company} // required
+                functionCall={totalProductsSold}
+              />
+            </Col>
+            <Col md="4" xl="2">
+              < StaticComponent 
+                title="Added to Cart" 
+                type="stat"
+                days={this.state.days} // required
+                company={this.state.company} // required
+                functionCall={totalProductsSold}
+              />
+            </Col>
+            <Col md="4" xl="2">
               < StaticComponent 
                 title="Products Sold" 
                 type="stat"
                 days={this.state.days} // required
                 company={this.state.company} // required
-                functionCall={totalProducts}
+                functionCall={totalProductsSold}
               />
             </Col>
-            <Col md="4">
-              < StaticComponent 
-                title="Total Sales" 
-                type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required
-                functionCall={totalSales}
-              />
-            </Col>
-            <Col md="4">
-              < StaticComponent 
-                title="Total Sales" 
-                type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required 
-                functionCall={totalSales}
-              />
-            </Col>
+
           </Row>
           <Row>
             <Col md="12">
@@ -158,19 +157,36 @@ class Dashboard extends React.Component {
               />
             </Col>
           </Row>
+          <Col md="12">
           <Row>
             <Top5Views
               days={this.state.days} // required
             />
           </Row>
+          </Col>
+          <Col md="12">
           <Row>
             <Top5Users
               days={this.state.days} // required
             />
           </Row>
+          </Col>
         </div>
     );
   }
 }
 
 export default Dashboard;
+
+function AddPropsHOC(WrappedComponent) {
+  return class extends React.Component {
+      componentWillReceiveProps(nextProps) {
+      console.log('Current props: ', this.props);
+      console.log('Next props: ', nextProps);
+      }
+      render() {
+      // Wraps the input component in a container, without mutating it. Good!
+      return <WrappedComponent {...this.props} />;
+      }
+  }
+}

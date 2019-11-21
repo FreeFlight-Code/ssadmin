@@ -34,39 +34,47 @@ export async function getData (type, showDays) {
 }
 
 export function filterBy (array, key, keyValue){
-    return array.filter( el => el[key] === keyValue)
+    if(array && key && keyValue)return array.filter( el => el[key] === keyValue)
 }
 
 export function createArray(array, key){
-    return array.map( el => el[key]);
+    if(array)return array.map( el => el[key]);
 }
 
 export const sortBy = {
     hl: function (array, key){
-        if(key){
-            return array.sort((a, b) => b[key]-a[key])
-        }else {
-            return array.sort((a, b) => b-a)
-        }
+            if(array){
+                if(key){
+                    return array.sort((a, b) => b[key]-a[key])
+                }else {
+                    return array.sort((a, b) => b-a)
+                }
+            }
     },
     lh: function (array, key){
-        if(key){
-            return array.sort((a, b) => a[key]-b[key])
-        }else {
-            return array.sort((a, b) => a-b)
+        if(array){
+            if(key){
+                return array.sort((a, b) => a[key]-b[key])
+            }else {
+                return array.sort((a, b) => a-b)
+            }
         }
     },
     alpha: function (array, key){
-        if(key){
-            return array.sort((a, b) => a[key]-b[key])
-        }else {
-            return array.sort()
+        if(array){
+            if(key){
+                return array.sort((a, b) => a[key]-b[key])
+            }else {
+                return array.sort()
+            }
         }
     }
 }
 export function getFirstOfArray(array, num){
-    array.splice(num);
-    return array;
+    if(array){
+        array.splice(num);
+        return array;
+    }
 }
 export function mergeDuplicates(array, idKey, mergeKey){
     try{

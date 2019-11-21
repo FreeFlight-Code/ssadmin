@@ -8,6 +8,7 @@ import {
   Table
 } from "reactstrap";
 
+// const {AddPropsHOC} = require('../HOC')
 const {
   top5SalesCustomers
 } = require('../../componentHandlers/apiCalls');
@@ -43,26 +44,28 @@ class Top5Users extends React.Component {
 
   render (){
     const {array} = this.state;
-    return(
-      <Card>
-          <CardHeader>
-              <CardTitle tag="h4">Top 5 Accounts</CardTitle>
-          </CardHeader>
-          <CardBody>
-              <Table className="tablesorter" responsive>
-                <thead className="text-primary">
-                  <tr>
-                    <th>User</th>
-                    <th>Sales</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <TableData data={array}/>
-                </tbody>
-              </Table>
-          </CardBody>
-      </Card>
-    )
+    if(array && array.length){
+      return(
+        <Card>
+            <CardHeader>
+                <CardTitle tag="h4">Top 5 Accounts</CardTitle>
+            </CardHeader>
+            <CardBody>
+                <Table className="tablesorter" responsive>
+                  <thead className="text-primary">
+                    <tr>
+                      <th>User</th>
+                      <th>Sales</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <TableData data={array}/>
+                  </tbody>
+                </Table>
+            </CardBody>
+        </Card>
+      )
+    } else return null
   }
 }
 
@@ -77,15 +80,6 @@ function TableData (props){
     )
   })
 }
-
-// function AddPropsHOC(WrappedComponent) {
-//   return class extends React.Component {
-
-//     render() {
-//       return <WrappedComponent {...this.props} />;
-//     }
-//   }
-// }
 
 // export default AddPropsHOC(Top5Users);
 

@@ -86,14 +86,16 @@ export default class Simpleview extends React.PureComponent {
     try{
       let isCompany = this.props.company ? this.props.company : null;
       let data = this.props.functionCall(this.props.days, isCompany)
-      data.then(res =>{
-        const {data, labels, summary} = res;
-        this.setState({
-          data: data,
-          labels: labels,
-          summary: summary
+      if(data){
+        data.then(res =>{
+          const {data, labels, summary} = res;
+          this.setState({
+            data: data,
+            labels: labels,
+            summary: summary
+          })
         })
-      })
+      }  
     }catch(e){
       console.error(e)
     }
@@ -160,7 +162,7 @@ export default class Simpleview extends React.PureComponent {
     // console.log(this.state);
     const {title, icon, type} = this.props;
     const {summary, data} = this.state;
-    if (data.length){
+    if (data){
       return (
         <Card className="card-chart">
         <CardHeader>

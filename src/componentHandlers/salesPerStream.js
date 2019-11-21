@@ -10,8 +10,6 @@ module.exports = function (days, companyId){
     if(days){
         return getData("sales", days).then(res=>{
 
-
-
             let {totalOrders} = res;
             if (companyId) totalOrders = filterBy(totalOrders, "stream", companyId);
             totalOrders = mergeDuplicates(totalOrders, "stream", "amount")
@@ -20,7 +18,7 @@ module.exports = function (days, companyId){
             const data = createArray(totalOrders, "amount");
 
 
-            let reducedData = data.reduce((total, num)=>total + num, 0)
+            let reducedData = data ? data.reduce((total, num)=>total + num, 0) : null
             // summary is what will be displayed at top of card
             let summary = `$${reducedData} Sales`;
             
@@ -29,7 +27,7 @@ module.exports = function (days, companyId){
                     labels: labels,
                     summary: summary
                 }
-        })
+        }).catch(e=>console.error(e))
     } else console.error('no days filter set')
 
 }
