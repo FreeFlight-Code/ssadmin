@@ -1,9 +1,10 @@
 import React from 'react';
+import AddPropsHOC from '../HOC';
 
-export default function SelectDay (props){
-    const {value} = props;
+function SelectDay (props){
+    const {days, handleDaysFilter} = props;
     return (
-        <select value={value} onChange={e=>props.handleDaysFilter(e.target.value)}>
+        <select value={days} onChange={e=>handleDaysFilter(e.target.value)}>
             <option value={7} >7 days</option>
             <option value={30}>30 days</option>
             <option value={90}>90 days</option>
@@ -12,3 +13,5 @@ export default function SelectDay (props){
         </select>
     )
 }
+
+export default AddPropsHOC(SelectDay);

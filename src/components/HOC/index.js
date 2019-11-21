@@ -5,12 +5,21 @@ const AddPropsHOC = OriginalComponent => {
         constructor(props) {
             super(props)
             this.state = {
-                days:7,
+                days:365,
                 company:"",
                 location:""
             }
             this.handleDaysFilter = this.handleDaysFilter.bind(this);
             this.handleCompanyFilter = this.handleCompanyFilter.bind(this);
+        }
+
+        componentDidMount(){
+            this.handleLocation();
+        }
+
+        handleLocation(){
+            const pageLocation = document.location.pathname.split('/')[2];
+            if(pageLocation!==this.state.location) this.setState({location:pageLocation})
         }
 
         handleDaysFilter(val){
@@ -26,12 +35,10 @@ const AddPropsHOC = OriginalComponent => {
         }
 
         render() {
-            // console.log(OriginalComponent)
-            return <OriginalComponent
-            handleCompanyFilter={this.handleCompanyFilter}
-            handleDaysFilter={this.handleDaysFilter}
-            {...this.state}
-            />
+            const {handleDaysFilter, handleCompanyFilter} = this;
+            const originalProps = this.props;
+            const updatedProps = {...originalProps, ...this.state, handleCompanyFilter, handleDaysFilter}
+            return <OriginalComponent {...updatedProps}/>
         }
     }
     return NewComponent;

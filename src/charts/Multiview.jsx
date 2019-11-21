@@ -17,6 +17,7 @@ import {
 } from "reactstrap";
 // data
 import GetData from "../datahandlers/GetData";
+import AddPropsHOC from "../components/HOC";
 
 
 
@@ -276,4 +277,4 @@ class Multiview extends React.Component {
   }
 }
 
-export default Multiview;
+export default AddPropsHOC (Multiview);

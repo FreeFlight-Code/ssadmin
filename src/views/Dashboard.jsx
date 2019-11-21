@@ -26,14 +26,8 @@ class Dashboard extends React.Component {
   constructor(props){
     super(props)
     this.state={
-      defaultLabels: [],
-      company: "",
-      streamsData: {},
-      salesData: {},
-      days: 365
+      company: ""
     }
-    this.handleCompanyFilter = this.handleCompanyFilter.bind(this);
-    this.handleDaysFilter = this.handleDaysFilter.bind(this);
   }
   componentDidMount(){
     let page = document.location.pathname.split('/')[2];
@@ -55,25 +49,13 @@ class Dashboard extends React.Component {
     }
   }
 
-  handleCompanyFilter(val){
-    this.setState({
-      company: val
-    })
-  }
-
-  handleDaysFilter(val){
-    this.setState({
-      days: parseInt(val)
-    })
-  }
-
   render() {
     return (
         <div className="content">
           <Row>
             <div className="inputHeader">
-              <SelectCompany id='companyIdDropdown' handleCompanyFilter={this.handleCompanyFilter} location={document.location.pathname.split('/')[2]}/>
-              <SelectDay handleDaysFilter={this.handleDaysFilter} value={this.state.days}/>
+              <SelectCompany id='companyIdDropdown'/>
+              <SelectDay/>
             </div>
           </Row>
           <Row>
@@ -81,8 +63,6 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Completed Sales" 
                 type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required
                 functionCall={totalSales}
               />
             </Col>
@@ -90,8 +70,6 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Stream Views" 
                 type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required
                 functionCall={totalViews}
               />
             </Col>
@@ -99,8 +77,6 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="API calls" 
                 type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required
                 functionCall={totalApiCalls}
               />
             </Col>
@@ -108,8 +84,6 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Products Clicked" 
                 type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required
                 functionCall={totalProductsSold}
               />
             </Col>
@@ -117,8 +91,6 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Added to Cart" 
                 type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required
                 functionCall={totalProductsSold}
               />
             </Col>
@@ -126,8 +98,6 @@ class Dashboard extends React.Component {
               < StaticComponent 
                 title="Products Sold" 
                 type="stat"
-                days={this.state.days} // required
-                company={this.state.company} // required
                 functionCall={totalProductsSold}
               />
             </Col>
@@ -157,7 +127,7 @@ class Dashboard extends React.Component {
               />
             </Col>
           </Row>
-          <Col md="12">
+          {/* <Col md="12">
           <Row>
             <Top5Views
               days={this.state.days} // required
@@ -170,23 +140,10 @@ class Dashboard extends React.Component {
               days={this.state.days} // required
             />
           </Row>
-          </Col>
+          </Col> */}
         </div>
     );
   }
 }
 
 export default Dashboard;
-
-// function AddPropsHOC(WrappedComponent) {
-//   return class extends React.Component {
-//       componentWillReceiveProps(nextProps) {
-//       console.log('Current props: ', this.props);
-//       console.log('Next props: ', nextProps);
-//       }
-//       render() {
-//       // Wraps the input component in a container, without mutating it. Good!
-//       return <WrappedComponent {...this.props} />;
-//       }
-//   }
-// }

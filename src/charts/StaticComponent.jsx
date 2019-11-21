@@ -1,3 +1,5 @@
+import AddPropsHOC from "../components/HOC";
+
 const React = require("react");
 
 // reactstrap components
@@ -8,11 +10,10 @@ const {
 } = require("reactstrap");
 
 
-export default class Simpleview extends React.PureComponent {
+class Simpleview extends React.PureComponent {
   constructor(props){
     super(props)
     this.state = {
-      labels: ["no data found"],
       data: [0]
     }
   }
@@ -41,7 +42,7 @@ export default class Simpleview extends React.PureComponent {
 
 
   render() {
-    // console.log(this.state);
+    // console.log(this.props)
     const {title, icon} = this.props;
     const {summary, staticContent} = this.state;
     return (
@@ -58,3 +59,5 @@ export default class Simpleview extends React.PureComponent {
     )
   }
 }
+
+export default AddPropsHOC(Simpleview)
