@@ -8,6 +8,15 @@ import {
     Table
   } from "reactstrap";
 
+
+
+//  Needs an array of array data
+//
+//
+//
+//
+//
+
 export default class BasicTable extends React.Component {
   constructor(props){
     super(props)

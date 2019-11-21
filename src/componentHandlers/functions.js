@@ -34,7 +34,7 @@ export async function getData (type, showDays) {
 }
 
 export function filterBy (array, key, keyValue){
-    return array.filter( el => el[key] == keyValue)
+    return array.filter( el => el[key] === keyValue)
 }
 
 export function createArray(array, key){
@@ -58,7 +58,7 @@ export const sortBy = {
     },
     alpha: function (array, key){
         if(key){
-            return array.sort((a, b) => a[key]<b[key])
+            return array.sort((a, b) => a[key]-b[key])
         }else {
             return array.sort()
         }
@@ -67,6 +67,35 @@ export const sortBy = {
 export function getFirstOfArray(array, num){
     array.splice(num);
     return array;
+}
+export function mergeDuplicates(array, idKey, mergeKey){
+    try{
+        if(array && array.length && idKey && mergeKey){
+            let returnArray = [];
+            // loop through array
+            for(let i = 0; i < array.length;i++){
+                let el = array[i];
+                if(i === 0) {
+                    returnArray.push(el)
+                } else {
+                    // loop through returnArray for matching id
+                    for(let returnArrayIndex = 0; returnArrayIndex<returnArray.length; returnArrayIndex++){
+                        if(el[idKey] === returnArray[returnArrayIndex][idKey]) {
+                            returnArray[returnArrayIndex][mergeKey]+=el[mergeKey];
+                            break;
+                        } else if (el[idKey] !== returnArray[returnArrayIndex][idKey] && returnArrayIndex===returnArray.length-1) {
+                            returnArray.push(el);
+                            break;
+                        }
+                    }
+        
+                }
+            }
+            return returnArray;
+        }
+    } catch (e){
+        throw new Error ("error at merge...")
+    }
 }
 
 

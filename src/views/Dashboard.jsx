@@ -5,7 +5,8 @@ import StaticComponent from '../charts/StaticComponent.jsx';
 import Simpleview from '../charts/Simpleview';
 import SelectCompany from '../components/Inputs/SelectCompany';
 import SelectDay from '../components/Inputs/SelectDay';
-import BasicTable from '../components/BasicTable/BasicTable.jsx';
+import Top5Users from '../components/Widgets/Top5Users'
+import Top5Views from '../components/Widgets/Top5Views'
 
 // reactstrap components
 import {
@@ -13,8 +14,6 @@ import {
   Col
 } from "reactstrap";
 const {
-  top5SalesCustomers,
-  top5ViewsCustomers,
   totalProducts,
   totalViews,
   salesPerUser,
@@ -160,19 +159,13 @@ class Dashboard extends React.Component {
             </Col>
           </Row>
           <Row>
-            <BasicTable 
+            <Top5Views
               days={this.state.days} // required
-              title="Most Sales"
-              headers={["Client", "Sales"]}
-              functionCall={top5SalesCustomers}
             />
           </Row>
           <Row>
-            <BasicTable 
+            <Top5Users
               days={this.state.days} // required
-              title="Most Views"
-              headers={["Client", "Views"]}
-              functionCall={top5ViewsCustomers}
             />
           </Row>
         </div>

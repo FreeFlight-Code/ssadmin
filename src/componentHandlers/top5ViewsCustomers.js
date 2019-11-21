@@ -1,28 +1,13 @@
-const getViews = require('./viewsPerUser')
+const {getData, sortBy, getFirstOfArray, mergeDuplicates} = require('./functions')
 
 module.exports = (days)=>{
-    return getViews(days).then(res=>{
-        //return an array of arrays
-        //with user then total sales
+    return getData("streams", days).then(res=>{
 
-            // console.log(res)
-        let max = 0;
-        let maxIndex = 0;
-        let returnArray = [];
-        let returnArrayLength = 5;
-        for (let topFive = 0; topFive < returnArrayLength; topFive++){
-            for (let i = 0; i < res.data.length; i++){
-                if (res.data[i] > max) {
-                    max = res.data[i]; maxIndex = i
-                };
-            }
-            if (!returnArray[topFive]) returnArray[topFive] = [];
-            // console.log(returnArray)
-            returnArray[topFive][0] = (res.labels.splice(maxIndex, 1)[0]);
-            returnArray[topFive][1] = (res.data.splice(maxIndex, 1)[0]);
-            max = 0;
-            maxIndex = 0
-        }
-        return returnArray;
+        let {totalStreams} = res;
+        let mergedStreams = mergeDuplicates(totalStreams, "user", "views")
+        let sortedArray = sortBy.hl(mergedStreams, "views");
+        let returnedArray = getFirstOfArray(sortedArray, 5);
+        return returnedArray;
+
     })
 }

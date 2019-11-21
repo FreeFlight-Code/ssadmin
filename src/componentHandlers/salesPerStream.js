@@ -1,4 +1,4 @@
-const {getData, sortBy, createArray, filterBy, getFirstOfArray} = require('./functions')
+const {getData, sortBy, createArray, filterBy, mergeDuplicates} = require('./functions')
 
 module.exports = function (days, companyId){
     //  returns sales per stream
@@ -10,8 +10,12 @@ module.exports = function (days, companyId){
     if(days){
         return getData("sales", days).then(res=>{
 
+
+
             let {totalOrders} = res;
-            if (companyId) totalOrders = filterBy(totalOrders, "stream", companyId);            totalOrders = sortBy.hl(totalOrders, "amount")
+            if (companyId) totalOrders = filterBy(totalOrders, "stream", companyId);
+            totalOrders = mergeDuplicates(totalOrders, "stream", "amount")
+            totalOrders = sortBy.hl(totalOrders, "amount");
             const labels = createArray(totalOrders, "stream");
             const data = createArray(totalOrders, "amount");
 
